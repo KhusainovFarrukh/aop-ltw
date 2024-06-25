@@ -8,10 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Filter;
 
 @Getter
 @Setter
 @Entity
+@Filter(name = "tenantFilter")
 @Table(name = "streets")
 public class StreetEntity {
 

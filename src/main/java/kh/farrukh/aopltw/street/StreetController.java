@@ -1,5 +1,6 @@
 package kh.farrukh.aopltw.street;
 
+import java.util.List;
 import kh.farrukh.aopltw.street.model.StreetRequestDTO;
 import kh.farrukh.aopltw.street.model.StreetResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -16,37 +17,40 @@ public class StreetController implements StreetApi {
   private final StreetService service;
 
   @Override
-  public ResponseEntity<Page<StreetResponseDTO>> getStreets(Pageable pageable, Long tenant) {
-    return ResponseEntity.ok(service.getStreets(pageable, tenant));
+  public ResponseEntity<Page<StreetResponseDTO>> getStreets(Pageable pageable) {
+    return ResponseEntity.ok(service.getStreets(pageable));
   }
 
   @Override
-  public ResponseEntity<StreetResponseDTO> getStreetById(Long id, Long tenant) {
-    return ResponseEntity.ok(service.getStreetById(id, tenant));
+  public ResponseEntity<List<StreetResponseDTO>> getStreets() {
+    return ResponseEntity.ok(service.getStreets());
+  }
+
+  @Override
+  public ResponseEntity<StreetResponseDTO> getStreetById(Long id) {
+    return ResponseEntity.ok(service.getStreetById(id));
   }
 
   @Override
   public ResponseEntity<StreetResponseDTO> createStreet(
-      StreetRequestDTO streetRequestDTO,
-      Long tenant
+      StreetRequestDTO streetRequestDTO
   ) {
     return ResponseEntity
         .status(HttpStatus.CREATED)
-        .body(service.createStreet(streetRequestDTO, tenant));
+        .body(service.createStreet(streetRequestDTO));
   }
 
   @Override
   public ResponseEntity<StreetResponseDTO> updateStreet(
       Long id,
-      StreetRequestDTO streetRequestDTO,
-      Long tenant
+      StreetRequestDTO streetRequestDTO
   ) {
-    return ResponseEntity.ok(service.updateStreet(id, streetRequestDTO, tenant));
+    return ResponseEntity.ok(service.updateStreet(id, streetRequestDTO));
   }
 
   @Override
-  public ResponseEntity<Void> deleteStreet(Long id, Long tenant) {
-    service.deleteStreet(id, tenant);
+  public ResponseEntity<Void> deleteStreet(Long id) {
+    service.deleteStreet(id);
     return ResponseEntity.noContent().build();
   }
 }
