@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.1'
+    id 'io.spring.dependency-management' version '1.1.5'
+}
+
+group = 'kh.farrukh'
+version = '0.0.1-SNAPSHOT'
+
+java {
+
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    //Spring AOP
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    //Spring Instrument
+    implementation 'org.springframework:spring-instrument:6.1.10'
+
+    //AspectJ Weaver
+    implementation 'org.aspectj:aspectjweaver:1.9.22'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+bootRun {
+    doFirst {
+        def aspectjWeaverJar = configurations.runtimeClasspath.find { it.name.contains("aspectjweaver") }
+        def springInstrumentJar = configurations.runtimeClasspath.find { it.name.contains("spring-instrument") }
+
+        if (springInstrumentJar && aspectjWeaverJar) {
+            jvmArgs = [
+                    "-javaagent:${aspectjWeaverJar.absolutePath}",
+                    "-javaagent:${springInstrumentJar.absolutePath}"
+            ]
+        } else {
+            throw new GradleException("AspectJ Weaver or Spring Instrument jar not found in runtimeClasspath")
+        }
+    }
+}
+
+

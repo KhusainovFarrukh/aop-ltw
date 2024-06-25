@@ -1,0 +1,11 @@
+<aspectj>
+
+  <weaver>
+    <include within="kh.farrukh.aopltw..*"/>
+  </weaver>
+
+  <aspects>
+    <aspect name="kh.farrukh.aopltw.LoggingAspect"/>
+  </aspects>
+
+</aspectj>
