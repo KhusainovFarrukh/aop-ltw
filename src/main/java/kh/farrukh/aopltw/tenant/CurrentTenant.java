@@ -1,6 +1,6 @@
 package kh.farrukh.aopltw.tenant;
 
-public class CurrentTenant {
+public final class CurrentTenant {
 
   private static final ThreadLocal<Long> tenant = new ThreadLocal<>();
 
