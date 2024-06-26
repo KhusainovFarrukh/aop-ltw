@@ -1,0 +1,11 @@
+<aspectj >
+
+  <weaver options="-verbose -showWeaveInfo">
+    <include within="kh.farrukh.aopltw.street..*"/>
+  </weaver>
+
+  <aspects>
+    <aspect name="kh.farrukh.aopltw.tenant.TenantAspect"/>
+  </aspects>
+
+</aspectj>

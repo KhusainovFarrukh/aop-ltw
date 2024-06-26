@@ -35,9 +35,28 @@ dependencies {
 
     //API docs
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+    
+    //Spring Instrument
+    implementation 'org.springframework:spring-instrument'
 
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+bootRun {
+    doFirst {
+        def aspectjWeaverJar = configurations.runtimeClasspath.find { it.name.contains("aspectjweaver") }
+        def springInstrumentJar = configurations.runtimeClasspath.find { it.name.contains("spring-instrument") }
+
+        if (aspectjWeaverJar && springInstrumentJar) {
+            jvmArgs = [
+                    "-javaagent:${aspectjWeaverJar.absolutePath}",
+                    "-javaagent:${springInstrumentJar.absolutePath}"
+            ]
+        } else {
+            throw new GradleException("AspectJ weaver or Spring instrument jar not found in runtime classpath")
+        }
+    }
 }
