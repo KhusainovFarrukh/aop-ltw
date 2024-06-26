@@ -1,7 +1,8 @@
 <aspectj >
 
-  <weaver options="-verbose -showWeaveInfo">
-    <include within="kh.farrukh.aopltw.street..*"/>
+  <weaver options="-Xreweavable -verbose -showWeaveInfo">
+    <include within="kh.farrukh.aopltw.tenant.TenantAspect"/>
+    <include within="org.hibernate.internal.SessionFactoryImpl.SessionBuilderImpl"/>
   </weaver>
 
   <aspects>
